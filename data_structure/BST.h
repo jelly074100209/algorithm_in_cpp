@@ -47,7 +47,7 @@ public:
 	}
 	BSTNode(const T& el, BSTNode<T>* l = 0, BSTNode<T>* r = 0)
 	{
-		element el;
+		element = el;
 		left = l;
 		right = r;
 	}
@@ -88,7 +88,7 @@ public:
 		postorder(root);
 	}
 	void insert(const T&);
-	void rescursiveInsert(cosnt T& el)
+	void rescursiveInsert(const T& el)
 	{
 		recuresiveInsert(root, el);
 	}
@@ -99,10 +99,6 @@ public:
 	T* recuresiveSearch()
 	{
 		return recuresiveSearch(root, el);
-	}
-	T* search(const T& el) const
-	{
-		return search(root, el);
 	}
 	
 	void deleteByCopying(BSTNode<T>* &);
@@ -420,6 +416,235 @@ void BST<T>::findAndDeleteByMerging(const T& el)
 	else
 	{
 		cout << "the tree is empty!" << endl;
+	}
+}
+
+//先序 迭代实现，使用栈
+template<class T>
+void BST<T>::iterativePreorder()
+{
+	Stack<BSTNode<T>*> travStack;
+	BSTNode<T> *p = root;
+	if (p != 0)
+	{
+		travStack.push(p);
+		while (!travStack.empty())
+		{
+			p = travStack.pop();
+			visit(p);
+			if (p->right != 0)
+			{
+				travStack.push(p->right);
+			}
+			if (p->left != 0)
+			{
+				travStack.push(p->left);//后进先出
+			}
+		}
+	}
+}
+
+template<class T>
+void BST<T>::iterativeInorder()
+{
+	Stack<BSTNode<T>*> travStack;
+	BSTNode<T> *p = root;
+	while (p != 0)
+	{
+		while (p != 0)
+		{
+			if (p->right)//stack push
+			{
+				travStack.push(p->right);
+			}
+			travStack.push(p);
+			p = p->left;
+		}
+		p = travStack.pop();
+		while (!travStack.empty() && p->right == 0)//stack pop
+		{
+			visit(p);
+			p = travStack.pop();
+		}
+		visit(p);
+		if (!travStack.empty())
+		{
+			p = travStack.pop();
+		}
+		else
+		{
+			p = 0;
+		}
+	}
+}
+
+template<class T>
+void BST<T>::iterativePostorder()
+{
+	Stack<BSTNode<T>*> travStack;
+	BSTNode<T>* p = root, *q = root;
+	while (p != 0)
+	{
+		for (; p->left != 0; p = p->left)
+		{
+			travStack.push(p);
+		}
+		while (p->right == 0 || p->right == q)
+		{
+			visit(p);
+			q = p;
+			if (travStack.empty())
+			{
+				return;
+			}
+			p = travStack.pop();
+		}
+		travStack.push(p);
+		p = p->right;
+	}
+}
+
+//宽度优先 使用队列
+template<class T>
+void BST<T>::breadthFirst()
+{
+	Queue<BSTNode<T>*> queue;
+	BSTNode<T> *p = root;
+	if (p != 0)
+	{
+		queue.enqueue(p);
+		while (!queue.empty())
+		{
+			p = queue.dequeue();
+			visit(p);
+			if (p->left != 0)
+			{
+				queue.enqueue(p->left);
+			}
+			if (p->right != 0)
+			{
+				queue.enqueue(p->right);
+			}
+		}
+	}
+}
+
+template<class T>
+void BST<T>::MorrisInorder()
+{
+	BSTNode<T> *p = root, *tmp;
+	while (p != 0)
+	{
+		if (p->left == 0)
+		{
+			visit(p);
+			p = p->right;
+		}
+		else
+		{
+			tmp = p->left;
+			while (tmp->right != 0 && tmp->right != p)
+			{
+				tmp = tmp->right;
+			}
+			if (tmp->right == 0)
+			{
+				tmp->right = p;
+				p = p->left;
+			}
+			else
+			{
+				visit(p);
+				tmp->right = 0;
+				p = p->right;
+			}
+		}
+	}
+}
+
+template<class T>
+void BST<T>::MorrisPreorder()
+{
+	BSTNode<T> *p = root, *tmp;
+	while (p != 0)
+	{
+		if (p->left == 0)
+		{
+			visit(p);
+			p = p->right;
+		}
+		else
+		{
+			tmp = p->left;
+			while (tmp->right != 0 && tmp->right != p)
+			{
+				tmp = tmp->right;
+			}
+			if (tmp->right == 0)
+			{
+				visit(p);
+				tmp->right = p;
+				p = p->left;
+			}
+			else
+			{
+				tmp->right = p;
+				p = p->right;
+			}
+		}
+	}
+}
+
+template<class T>
+void BST<T>::MorrisPostorder()
+{
+	BSTNode<T> *p = new BSTNode<T>(), *tmp, *q, *r, *s;
+	p->left = root;
+	while (p != 0)
+	{
+		if (p->left == 0)
+		{
+			p = p->right;
+		}
+		else
+		{
+			tmp = p->left;
+			while (tmp->right != 0 && tmp->right != p)
+			{
+				tmp = tmp->right;
+			}
+			if (tmp->right == 0)
+			{
+				tmp->right = p;
+				p = p->left;
+			}
+			else
+			{
+				for (q = p->left, r = q->right, s = r->right; r != p; q = r, r = s, s = s->right)
+				{
+					r->right = q;
+				}
+				for (s = q->right; q != p->left; q->right = r, r = q, q = s, s = s->right)
+				{
+					visit(q);
+				}
+				visit(p->left);
+				tmp->right = 0;
+				p = p->right;
+			}
+		}
+	}
+}
+
+template<class T>
+void BST<T>::balance(T* data, int first, int last)
+{
+	if (first <= last)
+	{
+		int middle = (first + last) / 2;
+		insert(data[middle]);
+		balance(data, first, middle - 1);
+		balance(data, middle + 1, last);
 	}
 }
 
