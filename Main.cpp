@@ -93,7 +93,7 @@ int main() {
 		threaded_tree.insert(threaded_data[i]);
 	}
 	cout << endl;
-	cout << "ÏßË÷Ê÷:" << endl;
+	cout << "threadedNode Tree inorder search:" << endl;
 	threaded_tree.inorder();
 	cout << endl;
 
