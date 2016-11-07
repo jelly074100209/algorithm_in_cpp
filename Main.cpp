@@ -42,7 +42,8 @@ int main() {
 	cout<<dllist.firstEl()<<endl;
 	cout << dllist;
 	cout << endl;
-	/*跳跃链表 主要用于快速查找链表*/
+
+	/*跳跃链表 主要用于快速查找链表 代替平衡树*/
 
 	SkipList<int> skiplist;
 	skiplist.choosePowers();
