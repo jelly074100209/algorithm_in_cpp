@@ -8,6 +8,7 @@
 #include "data_structure/SkipList.h"
 #include "data_structure/BST.h"
 #include "algorithm/sorting.h"
+#include "data_structure/ThreadedTree.h"
 
 using namespace std;
 
@@ -81,6 +82,19 @@ int main() {
 	tree.MorrisInorder();//TODO:需要重新改写
 	cout << endl;
 	tree.MorrisPostorder();
+	cout << endl;
+
+	/*线索树*/
+	int threaded_data[10] = { 15, 9, 23, 7, 8, 43, 12, 5, 19, 10 };
+	ThreadedTree<int> threaded_tree;
+	for (int i = 0; i < 10; i++)
+	{
+		cout << threaded_data[i] << " ";
+		threaded_tree.insert(threaded_data[i]);
+	}
+	cout << endl;
+	cout << "线索树:" << endl;
+	threaded_tree.inorder();
 	cout << endl;
 
 	/*排序*/
