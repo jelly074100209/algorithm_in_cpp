@@ -9,6 +9,7 @@
 #include "data_structure/BST.h"
 #include "algorithm/sorting.h"
 #include "data_structure/ThreadedTree.h"
+#include "example\multiset.h"
 
 using namespace std;
 
@@ -103,6 +104,12 @@ int main() {
 	quicksort(data, 10);
 	display(data, 10);
 
+    /*标准库中的set使用*/
+    ostream_iterator<int> out(cout, " ");
+    int a[] = { 1,2,3,4,5 };
+    set<int> st1;
+    //set<int, greater<int>> st2;
+    
 	const time_t t2 = time(NULL);
 	cout << "time is: " << t2-t1 << endl;
 
