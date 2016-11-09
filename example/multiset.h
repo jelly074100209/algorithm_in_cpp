@@ -1,5 +1,6 @@
 #ifndef MULTISET_H
 #define MULTISET_H
+#define _DEFINE_DEPRECATED_HASH_CLASSES 0
 
 #include <iterator>
 #include <iostream>
@@ -10,10 +11,11 @@ using namespace std;
 
 class Person
 {
+    //friend class lersserAge;
 public:
     Person(char *n = "", int a = 0)
     {
-        name = strdup(n);
+        name = _strdup(n);
         age = a;
     }
     bool operator<(const Person& p) const
@@ -24,7 +26,6 @@ public:
     {
         return strcmp(name, p.name) == 0 && age == p.age;
     }
-
 private:
     char *name;
     int age;
@@ -33,17 +34,17 @@ private:
         out << "(" << p.name << ", " << p.age << ")";
         return out;
     }
-    friend class lersserAge;
+    
 };
 
-class lesserAge
-{
-public:
-    int operator() (const Person& p1, const Person& p2) const
-    {
-        return (p1.age < p2.age);
-    }
-};
+//class lesserAge
+//{
+//public:
+//    int operator() (const Person& p1, const Person& p2) const
+//    {
+//        return (p1.age < p2.age);
+//    }
+//};
 
 void printSet(const set<int>& s, char *c)
 {
