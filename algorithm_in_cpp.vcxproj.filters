@@ -31,5 +31,8 @@
     <ClInclude Include="algorithm\sorting.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="data_structure\Trie.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

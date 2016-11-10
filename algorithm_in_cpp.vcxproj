@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="algorithm\sorting.h" />
     <ClInclude Include="data_structure\Node.h" />
+    <ClInclude Include="data_structure\Trie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
