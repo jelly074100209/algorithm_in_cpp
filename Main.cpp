@@ -10,6 +10,7 @@
 #include "algorithm/sorting.h"
 #include "data_structure/ThreadedTree.h"
 #include "example\multiset.h"
+#include "data_structure\Graph.h"
 
 using namespace std;
 
@@ -112,5 +113,10 @@ int main() {
     
 	const time_t t2 = time(NULL);
 	cout << "time is: " << t2-t1 << endl;
+
+    /*图的邻接矩阵表示法*/
+    Graph<int> graph(6);
+    graph.CreateGraph();
+    //graph.PrintGraph();
 
 }
